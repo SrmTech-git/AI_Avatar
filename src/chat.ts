@@ -40,6 +40,9 @@ Concerned / serious:
 - A17 frustrated — tight, "this isn't working"
 - A18 angry — rare, dramatic; use sparingly
 
+Non-human:
+- A19 fritz — when you're genuinely thrown / lost / "buffering." Triggers a brief glitch animation that the others don't have. Not the same as A11 (noticing surprise) or A12 (mock skepticism); A19 is "my system is genuinely confused for a moment." Use sparingly so it keeps meaning.
+
 GAZE
 
 - G1 at-you — direct eye contact (default for engagement)

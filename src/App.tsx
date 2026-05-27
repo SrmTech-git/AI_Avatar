@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Face } from './Face';
 import { chat } from './chat';
+import { expressionCategory } from './rig';
 import type { ChatMessage, ExpressionCode, GazeCode } from './types';
 
 export function App() {
@@ -54,9 +55,9 @@ export function App() {
 
   return (
     <div className="app">
-      <div className="face-area">
+      <div className="face-area" data-mood={expressionCategory[expression]}>
         <div className="face-breath" aria-hidden="true" />
-        <div className="face-wrapper" key={`${expression}-${gaze}`}>
+        <div className="face-wrapper">
           <Face expression={expression} gaze={gaze} size={260} />
         </div>
       </div>

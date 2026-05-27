@@ -19,6 +19,24 @@ body {
   align-items: flex-start;
 }
 
+/* Animated CSS custom properties for ambient mood color.
+   @property lets the numbers interpolate smoothly between mood states. */
+@property --breath-r {
+  syntax: '<number>';
+  initial-value: 70;
+  inherits: true;
+}
+@property --breath-g {
+  syntax: '<number>';
+  initial-value: 130;
+  inherits: true;
+}
+@property --breath-b {
+  syntax: '<number>';
+  initial-value: 220;
+  inherits: true;
+}
+
 .face-area {
   flex: 0 0 340px;
   position: sticky;
@@ -31,6 +49,35 @@ body {
   border: 1px solid #e5e5e5;
   border-radius: 12px;
   overflow: hidden;
+  /* Mood colors (default = resting) */
+  --breath-r: 70;
+  --breath-g: 130;
+  --breath-b: 220;
+  transition:
+    --breath-r 2.5s ease,
+    --breath-g 2.5s ease,
+    --breath-b 2.5s ease;
+}
+
+.face-area[data-mood="warm"] {
+  --breath-r: 230;
+  --breath-g: 160;
+  --breath-b: 90;
+}
+.face-area[data-mood="curious"] {
+  --breath-r: 200;
+  --breath-g: 200;
+  --breath-b: 70;
+}
+.face-area[data-mood="serious"] {
+  --breath-r: 120;
+  --breath-g: 110;
+  --breath-b: 160;
+}
+.face-area[data-mood="glitch"] {
+  --breath-r: 220;
+  --breath-g: 60;
+  --breath-b: 140;
 }
 
 .face-breath {
@@ -44,13 +91,44 @@ body {
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(70, 130, 220, 0.35) 25%,
-    rgba(70, 130, 220, 0.55) 45%,
-    rgba(70, 130, 220, 0) 75%
+    rgba(var(--breath-r), var(--breath-g), var(--breath-b), 0.35) 25%,
+    rgba(var(--breath-r), var(--breath-g), var(--breath-b), 0.55) 45%,
+    rgba(var(--breath-r), var(--breath-g), var(--breath-b), 0) 75%
   );
   animation: breathe 5s ease-in-out infinite;
   pointer-events: none;
   z-index: 0;
+}
+
+/* Fritz: brief one-shot glitch animation for A19 */
+.face-svg {
+  display: block;
+}
+
+.face-svg.fritzing {
+  animation: fritz 1000ms linear;
+}
+
+@keyframes fritz {
+  0%   { transform: translate(0, 0);     opacity: 1;   filter: none; }
+  4%   { transform: translate(-3px, 0);  opacity: 0.5; filter: blur(1px); }
+  9%   { transform: translate(2px, 1px); opacity: 1;   filter: none; }
+  14%  { transform: translate(-2px, 0);  opacity: 0.7; filter: blur(0.5px); }
+  19%  { transform: translate(3px, -1px); opacity: 1;   filter: none; }
+  24%  { transform: translate(0, 1px);   opacity: 0.3; filter: blur(1px); }
+  29%  { transform: translate(-1px, 0);  opacity: 1;   filter: none; }
+  35%  { transform: translate(3px, 0);   opacity: 0.6; filter: blur(0.5px); }
+  41%  { transform: translate(-3px, 1px); opacity: 1;  filter: none; }
+  47%  { transform: translate(1px, 0);   opacity: 0.4; filter: blur(1px); }
+  53%  { transform: translate(-2px, -1px); opacity: 1; filter: none; }
+  59%  { transform: translate(2px, 0);   opacity: 0.8; }
+  65%  { transform: translate(-1px, 1px); opacity: 0.5; filter: blur(1px); }
+  71%  { transform: translate(3px, 0);   opacity: 1;   filter: none; }
+  77%  { transform: translate(-2px, 0);  opacity: 0.7; filter: blur(0.5px); }
+  83%  { transform: translate(1px, -1px); opacity: 1;  filter: none; }
+  89%  { transform: translate(-1px, 0);  opacity: 0.6; }
+  94%  { transform: translate(1px, 1px); opacity: 1;   filter: none; }
+  100% { transform: translate(0, 0);     opacity: 1;   filter: none; }
 }
 
 .face-area svg {
@@ -64,18 +142,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: face-fade-in 280ms ease-out;
-}
-
-@keyframes face-fade-in {
-  from {
-    opacity: 0;
-    transform: scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
 }
 
 @keyframes breathe {
